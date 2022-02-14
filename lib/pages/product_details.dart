@@ -257,11 +257,21 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   addCart() {
     String userID = mp.userDet.id.toString();
+    String userStatus = mp.userDet.status.toString();
     String prodID = pD.proDetails['id'];
     String prodName = pD.proDetails['name'];
     String prodPrice = pD.proDetails['price'];
 
     if (userID == "NA") {
+      Fluttertoast.showToast(
+        msg: "Please login to add item to cart",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        fontSize: 14,
+      );
+      return;
+    } else if (userStatus != "Verified") {
       Fluttertoast.showToast(
         msg: "Please login to add item to cart",
         toastLength: Toast.LENGTH_SHORT,
