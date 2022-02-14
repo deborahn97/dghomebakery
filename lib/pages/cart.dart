@@ -1,5 +1,6 @@
 import 'package:drop_shadow_image/drop_shadow_image.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 import '../model/config.dart';
@@ -306,8 +307,21 @@ class Cart extends StatelessWidget {
                                       icon: const Icon(
                                         Icons.shopping_cart_rounded,
                                       ),
-                                      onPressed: () =>
-                                          Get.to(() => const Checkout()),
+                                      onPressed: () {
+                                        if (mp.userDet.status != "Verified") {
+                                          Fluttertoast.showToast(
+                                            msg:
+                                                "Please verify your account before checking out",
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.BOTTOM,
+                                            timeInSecForIosWeb: 1,
+                                            fontSize: 14,
+                                          );
+                                          return;
+                                        } else {
+                                          Get.to(() => const Checkout());
+                                        }
+                                      },
                                       label: Text(
                                         "Checkout",
                                         style: TextStyle(
