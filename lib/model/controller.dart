@@ -99,7 +99,7 @@ final MainPageController mp = Get.put(MainPageController());
 class CartController extends GetxController {
   var cartList = [].obs;
 
-  String userID = mp.userDet.id;
+  String userID = mp.userDet.id.toString();
 
   loadCart() async {
     http.post(
