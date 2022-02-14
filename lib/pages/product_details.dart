@@ -256,12 +256,11 @@ class _ProductDetailsState extends State<ProductDetails> {
   final ProductDetailsController pD = Get.put(ProductDetailsController());
 
   addCart() {
-    String userID = mp.userDet.id.toString();
     String prodID = pD.proDetails['id'];
     String prodName = pD.proDetails['name'];
     String prodPrice = pD.proDetails['price'];
 
-    if (userID == "NA") {
+    if (mp.userDet.id == "NA") {
       Fluttertoast.showToast(
         msg: "Please login to add item to cart",
         toastLength: Toast.LENGTH_SHORT,
@@ -282,7 +281,7 @@ class _ProductDetailsState extends State<ProductDetails> {
       http.post(
           Uri.parse(Config.server + "/dg_homebakery/php/product/add_cart.php"),
           body: {
-            "user_id": userID,
+            "user_id": mp.userDet.id.toString(),
             "prod_id": prodID,
             "prod_name": prodName,
             "prod_price": prodPrice,
