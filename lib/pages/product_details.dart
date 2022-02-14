@@ -256,11 +256,12 @@ class _ProductDetailsState extends State<ProductDetails> {
   final ProductDetailsController pD = Get.put(ProductDetailsController());
 
   addCart() {
+    String userID = mp.userDet.id.toString();
     String prodID = pD.proDetails['id'];
     String prodName = pD.proDetails['name'];
     String prodPrice = pD.proDetails['price'];
 
-    if (mp.userDet.id == "NA") {
+    if (userID == "NA") {
       Fluttertoast.showToast(
         msg: "Please login to add item to cart",
         toastLength: Toast.LENGTH_SHORT,
@@ -268,6 +269,7 @@ class _ProductDetailsState extends State<ProductDetails> {
         timeInSecForIosWeb: 1,
         fontSize: 14,
       );
+
       return;
     } else {
       ProgressDialog progress = ProgressDialog(
@@ -281,35 +283,35 @@ class _ProductDetailsState extends State<ProductDetails> {
       http.post(
           Uri.parse(Config.server + "/dg_homebakery/php/product/add_cart.php"),
           body: {
-            "user_id": mp.userDet.id.toString(),
+            "user_id": userID,
             "prod_id": prodID,
             "prod_name": prodName,
             "prod_price": prodPrice,
           }).then((response) {
-        var data = jsonDecode(response.body);
-        if (response.statusCode == 200 && data['status'] != 'failed') {
-          Fluttertoast.showToast(
-            msg: "Item added to cart",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-            timeInSecForIosWeb: 1,
-            fontSize: 14,
-          );
+          var data = jsonDecode(response.body);
+          if (response.statusCode == 200 && data['status'] != 'failed') {
+            Fluttertoast.showToast(
+              msg: "Item added to cart",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              fontSize: 14,
+            );
 
-          progress.dismiss();
-          return;
-        } else {
-          Fluttertoast.showToast(
-            msg: "Failed to add item. Please try again",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-            timeInSecForIosWeb: 1,
-            fontSize: 14,
-          );
-
-          progress.dismiss();
-          return;
-        }
+            progress.dismiss();
+            return;
+          } else {
+            Fluttertoast.showToast(
+              msg: "Failed to add item. Please try again",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              fontSize: 14,
+            );
+            
+            progress.dismiss();
+            return;
+          }
       });
     }
   }
