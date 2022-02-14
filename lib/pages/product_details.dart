@@ -273,7 +273,7 @@ class _ProductDetailsState extends State<ProductDetails> {
       return;
     } else if (userStatus != "Verified") {
       Fluttertoast.showToast(
-        msg: "Please login to add item to cart",
+        msg: "Please verify your account before making any purchases",
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIosWeb: 1,
